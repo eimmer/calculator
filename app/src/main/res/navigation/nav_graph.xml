@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.signanthealth.myapplication.FirstFragment"
+        android:name="com.signanthealth.myapplication.calculator.CalculatorView"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
