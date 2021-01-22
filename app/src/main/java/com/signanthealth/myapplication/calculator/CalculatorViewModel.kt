@@ -20,7 +20,6 @@ enum class Digit {
     EIGHT,
     NINE,
     ZERO,
-    DECIMAL;
 }
 
 enum class Operation {
@@ -30,7 +29,8 @@ enum class Operation {
     DIVIDE,
     MOD,
     EQUALS,
-    CLEAR
+    CLEAR,
+    DECIMAL
 }
 
 class CalculatorViewModel : ViewModel() {
@@ -38,17 +38,118 @@ class CalculatorViewModel : ViewModel() {
     private val announceOutputDisplay = MutableLiveData("")
     val outputDisplay: LiveData<String> = announceOutputDisplay
 
+    var display = ""
+    var currentDigit = 0.0
+    var decimal = 0
+    var isDecimal = false
+
+    private var firstNumber = 0.0
+    private var operation: Operation? = null
+    private var secondNumber: Double? = null
+    private var isCurrentNumberFirst = true
+
+
     fun userAction(buttonAction: ButtonAction) {
-        if(buttonAction is ButtonAction.DigitAction) handleNumber(buttonAction.digit)
-        else if(buttonAction is ButtonAction.OperationAction) handleOperation(buttonAction.operation)
+        if (buttonAction is ButtonAction.DigitAction) handleDigit(buttonAction.digit)
+        else if (buttonAction is ButtonAction.OperationAction) handleOperation(buttonAction.operation)
     }
 
-    private fun handleNumber(num: Digit) {
-
+    private fun handleDigit(num: Digit) {
+        addDigit(convertDigit(num))
     }
 
-    private fun handleOperation(op:Operation){
-
+    private fun convertDigit(num: Digit): String {
+        return when (num) {
+            Digit.ONE -> "1"
+            Digit.TWO -> "2"
+            Digit.THREE -> "3"
+            Digit.FOUR -> "4"
+            Digit.FIVE -> "5"
+            Digit.SIX -> "6"
+            Digit.SEVEN -> "7"
+            Digit.EIGHT -> "8"
+            Digit.NINE -> "9"
+            Digit.ZERO -> "0"
+        }
     }
 
+    private fun convertOperation(operation: Operation): String {
+        return when (operation) {
+            Operation.DECIMAL -> "."
+            Operation.ADD -> " + "
+            Operation.SUBTRACT -> " - "
+            Operation.MULTIPLY -> " * "
+            Operation.DIVIDE -> " / "
+            Operation.MOD -> " % "
+            Operation.EQUALS -> " = "
+            Operation.CLEAR -> " C "
+        }
+    }
+
+    private fun calculateTotal() : Double{
+        val n1 = firstNumber
+        val n2 = secondNumber!!
+        val function = operation
+
+        if(secondNumber == null || operation == null) {
+            displayError()
+            return 0.0
+        }
+
+        if(function == Operation.ADD) return (n1 + n2)
+        if(function == Operation.SUBTRACT) return (n1 - n2)
+        if(function == Operation.DIVIDE) return (n1 / n2)
+        if(function == Operation.MULTIPLY) return (n1 * n2)
+        if(function == Operation.MOD) return (n1 % n2)
+        return 0.0
+    }
+
+    private fun displayError() {
+        announceOutputDisplay.value = "ERROR"
+    }
+
+    private fun addDigit(digit: String) {
+        currentDigit = currentDigit * 10 + digit.toInt()
+        if (isCurrentNumberFirst) firstNumber = currentDigit
+        else secondNumber = currentDigit
+        updateDisplay()
+    }
+
+    private fun updateDisplay() {
+        announceOutputDisplay.value =
+            "$firstNumber${operation?.let { convertOperation(it) } ?: ""}${secondNumber?.toString() ?: ""}"
+    }
+
+    private fun handleOperation(userOperation: Operation) {
+        when (userOperation) {
+            Operation.CLEAR -> {
+                currentDigit = 0.0
+                firstNumber = 0.0
+                secondNumber = null
+                operation = null
+                isCurrentNumberFirst = true
+                updateDisplay()
+            }
+            Operation.EQUALS -> {
+                firstNumber = calculateTotal()
+                secondNumber = null
+                operation = null
+                updateDisplay()
+            }
+            Operation.DECIMAL -> TODO()
+            else -> setOperation(userOperation)
+        }
+    }
+
+    private fun setOperation(newOperation: Operation) {
+        if(secondNumber != null){
+            handleOperation(Operation.EQUALS)
+        }
+
+        isCurrentNumberFirst = false
+        operation = newOperation
+        secondNumber = null
+        currentDigit = 0.0
+        updateDisplay()
+    }
 }

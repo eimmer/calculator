@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.signanthealth.myapplication.R
 
 /**
@@ -19,10 +20,6 @@ class CalculatorView : Fragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         calculatorViewModel = CalculatorViewModel()
-
-        calculatorViewModel.outputDisplay.observe(viewLifecycleOwner){
-            view?.findViewById<TextView>(R.id.display)?.text = it
-        }
     }
 
     override fun onCreateView(
@@ -34,6 +31,10 @@ class CalculatorView : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        calculatorViewModel.outputDisplay.observe(viewLifecycleOwner){
+            view.findViewById<TextView>(R.id.display)?.text = it
+        }
 
         view.findViewById<Button>(R.id.one).setOnClickListener(this)
         view.findViewById<Button>(R.id.two).setOnClickListener(this)
@@ -51,7 +52,7 @@ class CalculatorView : Fragment(), View.OnClickListener {
         view.findViewById<Button>(R.id.multiply).setOnClickListener(this)
         view.findViewById<Button>(R.id.devide).setOnClickListener(this)
         view.findViewById<Button>(R.id.mod).setOnClickListener(this)
-        view.findViewById<Button>(R.id.equals).setOnClickListener(this)
+        view.findViewById<FloatingActionButton>(R.id.equals).setOnClickListener(this)
         view.findViewById<Button>(R.id.clear).setOnClickListener(this)
     }
 
@@ -67,8 +68,8 @@ class CalculatorView : Fragment(), View.OnClickListener {
             R.id.eight -> calculatorViewModel.userAction(ButtonAction.DigitAction(Digit.EIGHT))
             R.id.nine -> calculatorViewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
             R.id.zero -> calculatorViewModel.userAction(ButtonAction.DigitAction(Digit.ZERO))
-            R.id.decimal -> calculatorViewModel.userAction(ButtonAction.DigitAction(Digit.DECIMAL))
 
+            R.id.decimal -> calculatorViewModel.userAction(ButtonAction.OperationAction(Operation.DECIMAL))
             R.id.add -> calculatorViewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
             R.id.minus -> calculatorViewModel.userAction(ButtonAction.OperationAction(Operation.SUBTRACT))
             R.id.multiply -> calculatorViewModel.userAction(ButtonAction.OperationAction(Operation.MULTIPLY))
