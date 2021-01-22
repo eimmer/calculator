@@ -140,7 +140,7 @@ class CalculatorViewModelTest : TestCase() {
     }
 
     @Test
-    fun testEqualActionCalculatesTotal(){
+    fun testAdditionEqualityTotal(){
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
@@ -148,5 +148,12 @@ class CalculatorViewModelTest : TestCase() {
         assertEquals("18.0", viewModel.outputDisplay.value)
     }
 
-
+    @Test
+    fun testMultiplicationEqualityTotal(){
+        viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
+        viewModel.userAction(ButtonAction.OperationAction(Operation.MULTIPLY))
+        viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
+        viewModel.userAction(ButtonAction.OperationAction(Operation.EQUALS))
+        assertEquals("81.0", viewModel.outputDisplay.value)
+    }
 }
