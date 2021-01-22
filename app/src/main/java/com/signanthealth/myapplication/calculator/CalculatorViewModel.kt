@@ -35,12 +35,11 @@ enum class Operation {
 
 class CalculatorViewModel : ViewModel() {
 
-    private val announceOutputDisplay = MutableLiveData("")
+    private val announceOutputDisplay = MutableLiveData("0.0")
     val outputDisplay: LiveData<String> = announceOutputDisplay
 
-    var display = ""
     var currentDigit = 0.0
-    var decimal = 0
+    var decimalPlace = 0.1
     var isDecimal = false
 
     private var firstNumber = 0.0
@@ -109,7 +108,13 @@ class CalculatorViewModel : ViewModel() {
     }
 
     private fun addDigit(digit: String) {
-        currentDigit = currentDigit * 10 + digit.toInt()
+        if(isDecimal){
+            currentDigit += (digit.toInt() * decimalPlace)
+            decimalPlace *= 0.1
+        } else {
+            currentDigit = currentDigit * 10 + digit.toInt()
+        }
+
         if (isCurrentNumberFirst) firstNumber = currentDigit
         else secondNumber = currentDigit
         updateDisplay()
@@ -128,15 +133,21 @@ class CalculatorViewModel : ViewModel() {
                 secondNumber = null
                 operation = null
                 isCurrentNumberFirst = true
+                isDecimal = false
+                decimalPlace = 0.1
                 updateDisplay()
             }
             Operation.EQUALS -> {
                 firstNumber = calculateTotal()
                 secondNumber = null
                 operation = null
+                isDecimal = false
+                decimalPlace = 0.1
                 updateDisplay()
             }
-            Operation.DECIMAL -> TODO()
+            Operation.DECIMAL -> {
+                isDecimal = true
+            }
             else -> setOperation(userOperation)
         }
     }
@@ -147,6 +158,8 @@ class CalculatorViewModel : ViewModel() {
         }
 
         isCurrentNumberFirst = false
+        isDecimal = false
+        decimalPlace = 0.1
         operation = newOperation
         secondNumber = null
         currentDigit = 0.0

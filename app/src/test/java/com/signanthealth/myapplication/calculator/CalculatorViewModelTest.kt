@@ -31,13 +31,8 @@ class CalculatorViewModelTest : TestCase() {
     }
 
     @Test
-    fun testTrue() {
-        assertTrue(true);
-    }
-
-    @Test
     fun testDefaultValue() {
-        assertEquals("", viewModel.outputDisplay.value)
+        assertEquals("0.0", viewModel.outputDisplay.value)
     }
 
     @Test
@@ -155,5 +150,12 @@ class CalculatorViewModelTest : TestCase() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.EQUALS))
         assertEquals("81.0", viewModel.outputDisplay.value)
+    }
+
+    @Test
+    fun testDecimalAddsNumbersToCorrectSpot(){
+        viewModel.userAction(ButtonAction.OperationAction(Operation.DECIMAL))
+        viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
+        assertEquals("0.9", viewModel.outputDisplay.value)
     }
 }
