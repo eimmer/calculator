@@ -34,24 +34,39 @@ class EquationActionsKtTest : TestCase() {
         assertEquals(3, equation.significantDigits())
     }
 
-    fun testSignificantTotal(){
+    fun testSignificantTotal() {
         val equation = Equation("4", "2", Operation.ADD)
         assertEquals("6", equation.significantTotal())
     }
 
-    fun testSignificantTotalForMultiply(){
+    fun testSignificantTotalForMultiply() {
         val equation = Equation(".2", ".2", Operation.MULTIPLY)
         assertEquals("0.04", equation.significantTotal())
     }
 
-    fun testSignificantTotalForDivideBigDigits(){
+    fun testSignificantTotalForDivideBigDigits() {
         val equation = Equation(".3", ".3", Operation.DIVIDE)
         assertEquals("1", equation.significantTotal())
     }
 
-    fun testDecimalRounding(){
+    fun testDecimalRounding() {
         val equation = Equation("100", "3", Operation.DIVIDE)
-        assertEquals("33", equation.significantTotal())
+        assertEquals("33.3333333", equation.significantTotal())
+    }
+
+    fun testFirstNumberOnly() {
+        val equation = Equation(".3", "", Operation.ADD)
+        assertEquals("0.3", equation.significantTotal())
+    }
+
+    fun testFormattedString() {
+        val equation = Equation("4.12", "2.1", Operation.MULTIPLY)
+        assertEquals("4.12 x 2.1", equation.formattedEquation())
+    }
+
+    fun testFormattedAdditionString() {
+        val equation = Equation("2", "14", Operation.ADD)
+        assertEquals("2 + 14", equation.formattedEquation())
     }
 
 }

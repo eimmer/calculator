@@ -32,74 +32,74 @@ class CalculatorViewModelTest : TestCase() {
 
     @Test
     fun testDefaultValue() {
-        assertEquals("0.0", viewModel.outputDisplay.value)
+        assertEquals("0", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitOne() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.ONE))
-        assertEquals("1.0", viewModel.outputDisplay.value)
+        assertEquals("1", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitOneAndOne() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.ONE))
         viewModel.userAction(ButtonAction.DigitAction(Digit.ONE))
-        assertEquals("11.0", viewModel.outputDisplay.value)
+        assertEquals("11", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitTwo() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.TWO))
-        assertEquals("2.0", viewModel.outputDisplay.value)
+        assertEquals("2", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitThree() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.THREE))
-        assertEquals("3.0", viewModel.outputDisplay.value)
+        assertEquals("3", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitFour() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.FOUR))
-        assertEquals("4.0", viewModel.outputDisplay.value)
+        assertEquals("4", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitFive() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.FIVE))
-        assertEquals("5.0", viewModel.outputDisplay.value)
+        assertEquals("5", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitSix() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.SIX))
-        assertEquals("6.0", viewModel.outputDisplay.value)
+        assertEquals("6", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitSeven() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.SEVEN))
-        assertEquals("7.0", viewModel.outputDisplay.value)
+        assertEquals("7", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitEight() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.EIGHT))
-        assertEquals("8.0", viewModel.outputDisplay.value)
+        assertEquals("8", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitNine() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
-        assertEquals("9.0", viewModel.outputDisplay.value)
+        assertEquals("9", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testDigitZero() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.ZERO))
-        assertEquals("0.0", viewModel.outputDisplay.value)
+        assertEquals("0", viewModel.outputDisplay.value)
     }
 
     @Test
@@ -107,14 +107,14 @@ class CalculatorViewModelTest : TestCase() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.DigitAction(Digit.SIX))
         viewModel.userAction(ButtonAction.DigitAction(Digit.ZERO))
-        assertEquals("960.0", viewModel.outputDisplay.value)
+        assertEquals("960", viewModel.outputDisplay.value)
     }
 
     @Test
     fun testAdditionSignDisplay() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
-        assertEquals("9.0 + ", viewModel.outputDisplay.value)
+        assertEquals("9 +", viewModel.outputDisplay.value)
     }
 
     @Test
@@ -122,7 +122,7 @@ class CalculatorViewModelTest : TestCase() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
-        assertEquals("9.0 + 9.0", viewModel.outputDisplay.value)
+        assertEquals("9 + 9", viewModel.outputDisplay.value)
     }
 
     @Test
@@ -131,29 +131,44 @@ class CalculatorViewModelTest : TestCase() {
         viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.CLEAR))
-        assertEquals("0.0", viewModel.outputDisplay.value)
+        assertEquals("0", viewModel.outputDisplay.value)
     }
 
     @Test
-    fun testAdditionEqualityTotal(){
+    fun testNumbersAfterClearDisplayCorrectly(){
+        viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
+        viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
+        viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
+        viewModel.userAction(ButtonAction.OperationAction(Operation.CLEAR))
+        assertEquals("0", viewModel.outputDisplay.value)
+        viewModel.userAction(ButtonAction.DigitAction(Digit.SEVEN))
+        assertEquals("7", viewModel.outputDisplay.value)
+//        viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
+//        viewModel.userAction(ButtonAction.DigitAction(Digit.EIGHT))
+//        viewModel.userAction(ButtonAction.OperationAction(Operation.CLEAR))
+//        assertEquals("15", viewModel.outputDisplay.value)
+    }
+
+    @Test
+    fun testAdditionEqualityTotal() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.EQUALS))
-        assertEquals("18.0", viewModel.outputDisplay.value)
+        assertEquals("18", viewModel.outputDisplay.value)
     }
 
     @Test
-    fun testMultiplicationEqualityTotal(){
+    fun testMultiplicationEqualityTotal() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.MULTIPLY))
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.EQUALS))
-        assertEquals("81.0", viewModel.outputDisplay.value)
+        assertEquals("81", viewModel.outputDisplay.value)
     }
 
     @Test
-    fun testDecimalAddsNumbersToCorrectSpot(){
+    fun testDecimalAddsNumbersToCorrectSpot() {
         viewModel.userAction(ButtonAction.OperationAction(Operation.DECIMAL))
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         assertEquals("0.9", viewModel.outputDisplay.value)
