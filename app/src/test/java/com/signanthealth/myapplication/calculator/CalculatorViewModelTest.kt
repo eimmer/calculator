@@ -143,10 +143,10 @@ class CalculatorViewModelTest : TestCase() {
         assertEquals("0", viewModel.outputDisplay.value)
         viewModel.userAction(ButtonAction.DigitAction(Digit.SEVEN))
         assertEquals("7", viewModel.outputDisplay.value)
-//        viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
-//        viewModel.userAction(ButtonAction.DigitAction(Digit.EIGHT))
-//        viewModel.userAction(ButtonAction.OperationAction(Operation.CLEAR))
-//        assertEquals("15", viewModel.outputDisplay.value)
+        viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
+        viewModel.userAction(ButtonAction.DigitAction(Digit.EIGHT))
+        viewModel.userAction(ButtonAction.OperationAction(Operation.EQUALS))
+        assertEquals("15", viewModel.outputDisplay.value)
     }
 
     @Test
