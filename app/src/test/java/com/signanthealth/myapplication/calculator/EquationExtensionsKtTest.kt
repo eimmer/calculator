@@ -1,10 +1,14 @@
 package com.signanthealth.myapplication.calculator
 
+import com.signanthealth.myapplication.extensions.calculateTotal
+import com.signanthealth.myapplication.extensions.formattedEquation
+import com.signanthealth.myapplication.extensions.significantDigits
+import com.signanthealth.myapplication.extensions.significantTotal
 import com.signanthealth.myapplication.model.Equation
 import com.signanthealth.myapplication.model.Operation
 import junit.framework.TestCase
 
-class EquationActionsKtTest : TestCase() {
+class EquationExtensionsKtTest : TestCase() {
 
     fun testCalculateTotal() {
         val equation = Equation("4", "2", Operation.ADD)

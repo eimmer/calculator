@@ -1,10 +1,10 @@
-package com.signanthealth.myapplication.calculator
+package com.signanthealth.myapplication.extensions
 
 import com.signanthealth.myapplication.model.Equation
 import com.signanthealth.myapplication.model.Operation
 import kotlin.math.max
 
-fun Equation.formattedEquation():String{
+fun Equation.formattedEquation(): String {
     return "$firstNumber ${operation?.display ?: ""} $secondNumber".trim()
 }
 
@@ -26,8 +26,8 @@ fun Equation.calculateTotal(): Double {
  * For math and subtraction, the number with the most decimal
  */
 fun Equation.significantDigits(): Int {
-    var numberOneDecimalCount = 0
-    var numberTwoDecimalCount = 0
+    val numberOneDecimalCount: Int
+    val numberTwoDecimalCount: Int
 
     val firstIndexOf = firstNumber.indexOf('.', 0)
     if (firstIndexOf > -1) {
@@ -43,7 +43,10 @@ fun Equation.significantDigits(): Int {
         numberTwoDecimalCount = 0
     }
 
-    if (operation == Operation.ADD || operation == Operation.SUBTRACT) return max(numberOneDecimalCount, numberTwoDecimalCount)
+    if (operation == Operation.ADD || operation == Operation.SUBTRACT) {
+        return max(numberOneDecimalCount, numberTwoDecimalCount)
+    }
+
     if (operation == Operation.MULTIPLY || operation == Operation.DIVIDE || operation == Operation.MOD) return numberOneDecimalCount + numberTwoDecimalCount
     return 0
 }
@@ -51,7 +54,7 @@ fun Equation.significantDigits(): Int {
 /**
  * Produces the total of the equation with the decimals rounded to the significant digit.
  */
-fun Equation.significantTotal() : String {
+fun Equation.significantTotal(): String {
     val format = "%.7f".format(calculateTotal())
     return format.trimEnd('0').trimEnd('.')
 }

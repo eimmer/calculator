@@ -3,6 +3,8 @@ package com.signanthealth.myapplication.calculator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.signanthealth.myapplication.extensions.formattedEquation
+import com.signanthealth.myapplication.extensions.significantTotal
 import com.signanthealth.myapplication.model.Digit
 import com.signanthealth.myapplication.model.Equation
 import com.signanthealth.myapplication.model.Operation
@@ -26,11 +28,13 @@ class CalculatorViewModel : ViewModel() {
 
     private fun handleDigit(num: Digit) {
         if (currentEquation.operation == null) {
-            currentEquation = if (currentEquation.firstNumber == "0") currentEquation.copy(firstNumber = num.value)
-            else currentEquation.copy(firstNumber = currentEquation.firstNumber.plus(num.value))
+            currentEquation =
+                if (currentEquation.firstNumber == "0") currentEquation.copy(firstNumber = num.value)
+                else currentEquation.copy(firstNumber = currentEquation.firstNumber.plus(num.value))
         } else {
-            currentEquation = if (currentEquation.secondNumber == "0") currentEquation.copy(secondNumber = num.value)
-            else currentEquation.copy(secondNumber = currentEquation.secondNumber.plus(num.value))
+            currentEquation =
+                if (currentEquation.secondNumber == "0") currentEquation.copy(secondNumber = num.value)
+                else currentEquation.copy(secondNumber = currentEquation.secondNumber.plus(num.value))
         }
         updateDisplay()
     }

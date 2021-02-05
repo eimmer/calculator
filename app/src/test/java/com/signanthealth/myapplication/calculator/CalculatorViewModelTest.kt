@@ -137,7 +137,7 @@ class CalculatorViewModelTest : TestCase() {
     }
 
     @Test
-    fun testNumbersAfterClearDisplayCorrectly(){
+    fun testNumbersAfterClearDisplayCorrectly() {
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
         viewModel.userAction(ButtonAction.OperationAction(Operation.ADD))
         viewModel.userAction(ButtonAction.DigitAction(Digit.NINE))
