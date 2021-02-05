@@ -1,5 +1,7 @@
 package com.signanthealth.myapplication.calculator
 
+import com.signanthealth.myapplication.model.Equation
+import com.signanthealth.myapplication.model.Operation
 import junit.framework.TestCase
 
 class EquationActionsKtTest : TestCase() {

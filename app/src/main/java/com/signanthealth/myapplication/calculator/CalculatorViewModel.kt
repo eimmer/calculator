@@ -3,6 +3,9 @@ package com.signanthealth.myapplication.calculator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.signanthealth.myapplication.model.Digit
+import com.signanthealth.myapplication.model.Equation
+import com.signanthealth.myapplication.model.Operation
 
 sealed class ButtonAction {
     class DigitAction(val digit: Digit) : ButtonAction()

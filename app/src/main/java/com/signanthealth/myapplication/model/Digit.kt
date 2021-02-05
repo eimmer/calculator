@@ -1,4 +1,4 @@
-package com.signanthealth.myapplication.calculator
+package com.signanthealth.myapplication.model
 
 enum class Digit(val value: String) {
     ONE("1"),

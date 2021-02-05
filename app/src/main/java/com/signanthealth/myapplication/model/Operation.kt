@@ -1,4 +1,4 @@
-package com.signanthealth.myapplication.calculator
+package com.signanthealth.myapplication.model
 
 enum class Operation(val display: String) {
     ADD("+"),

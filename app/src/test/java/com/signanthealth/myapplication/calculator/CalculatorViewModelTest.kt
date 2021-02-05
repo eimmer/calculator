@@ -3,6 +3,8 @@ package com.signanthealth.myapplication.calculator
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.signanthealth.myapplication.model.Digit
+import com.signanthealth.myapplication.model.Operation
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Rule

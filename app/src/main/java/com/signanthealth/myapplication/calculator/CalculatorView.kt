@@ -1,21 +1,20 @@
 package com.signanthealth.myapplication.calculator
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.fragment.app.Fragment
 import com.signanthealth.myapplication.R
+import com.signanthealth.myapplication.databinding.FragmentFirstBinding
+import com.signanthealth.myapplication.model.Digit
+import com.signanthealth.myapplication.model.Operation
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class CalculatorView : Fragment(), View.OnClickListener {
 
-    lateinit var calculatorViewModel:CalculatorViewModel
+    private lateinit var calculatorViewModel: CalculatorViewModel
+    private lateinit var binding: FragmentFirstBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,41 +22,42 @@ class CalculatorView : Fragment(), View.OnClickListener {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_first, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+
+        binding = FragmentFirstBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        calculatorViewModel.outputDisplay.observe(viewLifecycleOwner){
+        calculatorViewModel.outputDisplay.observe(viewLifecycleOwner) {
             view.findViewById<TextView>(R.id.display)?.text = it
         }
 
-        view.findViewById<Button>(R.id.one).setOnClickListener(this)
-        view.findViewById<Button>(R.id.two).setOnClickListener(this)
-        view.findViewById<Button>(R.id.three).setOnClickListener(this)
-        view.findViewById<Button>(R.id.four).setOnClickListener(this)
-        view.findViewById<Button>(R.id.five).setOnClickListener(this)
-        view.findViewById<Button>(R.id.six).setOnClickListener(this)
-        view.findViewById<Button>(R.id.seven).setOnClickListener(this)
-        view.findViewById<Button>(R.id.eight).setOnClickListener(this)
-        view.findViewById<Button>(R.id.nine).setOnClickListener(this)
-        view.findViewById<Button>(R.id.zero).setOnClickListener(this)
-        view.findViewById<Button>(R.id.decimal).setOnClickListener(this)
-        view.findViewById<Button>(R.id.add).setOnClickListener(this)
-        view.findViewById<Button>(R.id.minus).setOnClickListener(this)
-        view.findViewById<Button>(R.id.multiply).setOnClickListener(this)
-        view.findViewById<Button>(R.id.devide).setOnClickListener(this)
-        view.findViewById<Button>(R.id.mod).setOnClickListener(this)
-        view.findViewById<FloatingActionButton>(R.id.equals).setOnClickListener(this)
-        view.findViewById<Button>(R.id.clear).setOnClickListener(this)
+        binding.one.setOnClickListener(this)
+        binding.two.setOnClickListener(this)
+        binding.three.setOnClickListener(this)
+        binding.four.setOnClickListener(this)
+        binding.five.setOnClickListener(this)
+        binding.six.setOnClickListener(this)
+        binding.seven.setOnClickListener(this)
+        binding.eight.setOnClickListener(this)
+        binding.nine.setOnClickListener(this)
+        binding.zero.setOnClickListener(this)
+        binding.decimal.setOnClickListener(this)
+        binding.add.setOnClickListener(this)
+        binding.minus.setOnClickListener(this)
+        binding.multiply.setOnClickListener(this)
+        binding.devide.setOnClickListener(this)
+        binding.mod.setOnClickListener(this)
+        binding.equals.setOnClickListener(this)
+        binding.clear.setOnClickListener(this)
     }
 
     override fun onClick(viewItem: View?) {
-        when(viewItem?.id){
+        when (viewItem?.id) {
             R.id.one -> calculatorViewModel.userAction(ButtonAction.DigitAction(Digit.ONE))
             R.id.two -> calculatorViewModel.userAction(ButtonAction.DigitAction(Digit.TWO))
             R.id.three -> calculatorViewModel.userAction(ButtonAction.DigitAction(Digit.THREE))
